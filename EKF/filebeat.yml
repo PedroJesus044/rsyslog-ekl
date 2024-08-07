@@ -1,0 +1,18 @@
+filebeat.inputs:
+- type: log
+  paths:
+    #- '/var/log/dnf.log'
+    #- '/mnt/var/log/httpd/access_log'
+    - '/mnt/var/log/messages'
+
+processors:
+  - syslog:
+      field: message
+
+output.elasticsearch:
+  hosts: ["http://10.22.165.29:9200"]
+  #username: elastic
+  #password: aSKEKgR4LKuX5qkKserN
+  ssl.verification_mode: none
+  indices:
+    - index: "filebeat-%{[agent.version]}-%{+yyyy.MM.dd}"
