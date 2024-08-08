@@ -33,13 +33,3 @@ services:
     depends_on:
       elasticsearch:
         condition: service_healthy
-
-  mariadb-log-test:
-    image: mariadb:11.2.4
-    environment:
-      - MARIADB_ROOT_PASSWORD=mariadb
-    ports:
-      - "3306:3306"
-    logging:
-      driver: "syslog"
-        #syslog-address: "udp://1.2.3.4:1111"
