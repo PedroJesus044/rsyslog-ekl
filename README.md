@@ -5,7 +5,7 @@
     En un servidor con docker compose bastará correr el siguiente comando para iniciar el entorno EKL para el procesamiento de logs con logstash dentro de la carpeta EKL
     <ul>
 <pre>
-cd rsyslog-ekl/ekl
+cd rsyslog-ekl/EKL
 docker compose up -d
 </pre>
     </ul>
