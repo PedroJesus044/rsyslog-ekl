@@ -1,16 +1,43 @@
 # rsyslog-ekl
-#En un servidor solo bastará correr el siguiente comando para iniciar el entorno EKL para el procesamiento de logs con logstash dentro de la carpeta EKL
+<h2>Instalación</h2>
+<ul>
+  <li>
+    En un servidor con docker compose bastará correr el siguiente comando para iniciar el entorno EKL para el procesamiento de logs con logstash dentro de la carpeta EKL
+    <ul>
+<pre>
+cd rsyslog-ekl/ekl
 docker compose up -d
+</pre>
+    </ul>
+  </li>
 
-#Se instala la paquetería rsyslog
+  <li>
+    Se instala la paquetería rsyslog
+    <ul>
+<pre>
 yum install rsyslog
+</pre>
+    </ul>
+  </li>
 
-#Copiar los archivos 70-output.conf 01-json-template.conf a la ruta correspondiente
+  <li>
+    Copiar los archivos 70-output.conf y 01-json-template.conf a la ruta correspondiente y reiniciar el servicio rsyslog
+    <ul>
+<pre>
 cp ./*.conf /etc/rsyslog.d/
+systemctl restart rsyslog
+</pre>
+    </ul>
+  </li>
+</ul>
+Ahora solo debemos mandar los logs de nuestros servicios a syslog de manera normal en cada paquetería instalada.
 
-#Ahora solo basta con mandar los logs de todo a syslog de manera normal en cada paquetería instalada.
-
-#Para mandar logs desde Docker los servicios dentro de docker-compose.yaml deberán verse de la siguiente manera
+<h2>Configuración de syslog en los servicios</h2>
+<ul>
+  <li>
+    <h3>Docker</h3>
+    <ul>Se requiere que los servicios en docker compose queden de la siguiente manera
+<pre>
 services:
   mariadb-log-test:
     image: mariadb:11.2.4
@@ -18,16 +45,35 @@ services:
       - MARIADB_ROOT_PASSWORD=mariadb
     ports:
       - "3306:3306"
-    #La sessión logging con el driver syslog mandará los logs del contenedor.
-    #El programname será el ID del contenedor de Docker
+    #La sección logging con el driver syslog mandará los logs del contenedor al syslog del sistema previamente configurado.
+    #La variable "programname" será el ID del contenedor de Docker
     logging:
       driver: "syslog"
-        #syslog-address: "udp://1.2.3.4:1111"
+</pre>
+    </ul> 
+  </li>
 
-#Para mandar access_logs desde httpd se debe agregar la siguiente línea al archivo de configuración de apache /etc/httpd/conf/httpd.conf
-#Los error_logs se mandan a logstash de manera predeterminada vía systemd
+  <li>
+    <h3>httpd</h3>
+    <ul>Agregar la siguiente línea al archivo de configuración de apache /etc/httpd/conf/httpd.conf
+<pre>
 CustomLog "| /bin/sh -c '/usr/bin/tee -a /var/log/httpd/access_log | /usr/bin/logger -thttpd_access_log'" combined
+</pre>
+    </ul> 
+  </li>
 
-#Para mandar logs desde mariadb bastará con editar el servicio desde systemd con el siguiente comando. Esto abrirá una ventana con vim o nano, seguidamente se deberá pegar el contenido de mariadb-service.conf
-#Nota: Debemos asegurarnos que la variable log_error en /etc/my.conf.d/service.conf no está definida
-sudo systemctl edit mariadb.service
+
+  <li>
+    <h3>mariadb</h3>
+    <ul>Se debe editar el servicio desde systemd con el siguiente comando y pegar sl siguiente texto a continuación
+<pre>
+[Service]
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogFacility=daemon
+SysLogLevel=err
+</pre>
+    </ul> 
+  </li>
+</ul>
