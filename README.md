@@ -5,7 +5,7 @@
     En un servidor con docker compose bastará correr el siguiente comando para iniciar el entorno EKL para el procesamiento de logs con logstash dentro de la carpeta EKL
     <ul>
 <pre>
-cd rsyslog-ekl/ekl
+cd rsyslog-ekl/EKL
 docker compose up -d
 </pre>
     </ul>
@@ -65,7 +65,7 @@ CustomLog "| /bin/sh -c '/usr/bin/tee -a /var/log/httpd/access_log | /usr/bin/lo
 
   <li>
     <h3>mariadb</h3>
-    <ul>Se debe editar el servicio desde systemd con el siguiente comando y pegar sl siguiente texto a continuación
+    <ul>Se debe editar el servicio desde systemd con el siguiente comando y pegar el siguiente texto a continuación
 <pre>
 [Service]
 
