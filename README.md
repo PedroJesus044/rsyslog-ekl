@@ -62,7 +62,6 @@ CustomLog "| /bin/sh -c '/usr/bin/tee -a /var/log/httpd/access_log | /usr/bin/lo
     </ul> 
   </li>
 
-
   <li>
     <h3>mariadb</h3>
     <ul>Se debe editar el servicio desde systemd con el siguiente comando y pegar el siguiente texto a continuación
