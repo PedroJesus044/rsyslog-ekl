@@ -35,3 +35,42 @@ services:
     depends_on:
       elasticsearch:
         condition: service_healthy
+  apache:
+    image: httpd
+    ports:
+      - "4443:80"
+    logging:
+      driver: syslog
+      options:
+        tag: docker-apache
+
+  nginx:
+    image: nginx
+    ports:
+      - "4444:80"
+    logging:
+      driver: syslog
+      options:
+        tag: docker-nginx
+
+  db01:
+    image: mariadb
+    environment:
+    - MYSQL_ROOT_PASSWORD=1234
+    ports:
+      - 3306:3306
+    logging:
+      driver: syslog
+      options:
+        tag: docker-db01
+
+  db02:
+    image: mariadb
+    environment:
+    - MYSQL_ROOT_PASSWORD=1234
+    ports:
+      - 3308:3306
+    logging:
+      driver: syslog
+      options:
+        tag: docker-db02
