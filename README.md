@@ -5,7 +5,6 @@
     En un servidor con docker compose bastará correr el siguiente comando para iniciar el entorno EKL para el procesamiento de logs con logstash dentro de la carpeta EKL
     <ul>
 <pre>
-cd rsyslog-ekl/EKL
 docker compose up -d
 </pre>
     </ul>
@@ -48,7 +47,9 @@ services:
     #La sección logging con el driver syslog mandará los logs del contenedor al syslog del sistema previamente configurado.
     #La variable "programname" será el ID del contenedor de Docker
     logging:
-      driver: "syslog"
+      driver: syslog
+      options:
+        tag: container-name-this-is-a-tag
 </pre>
     </ul> 
   </li>

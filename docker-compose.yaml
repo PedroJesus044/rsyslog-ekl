@@ -51,7 +51,7 @@ services:
   apache:
     image: httpd
     ports:
-      - "4443:80"
+      - "4431:80"
     logging:
       driver: syslog
       options:
@@ -60,7 +60,7 @@ services:
   nginx:
     image: nginx
     ports:
-      - "4444:80"
+      - "4432:80"
     logging:
       driver: syslog
       options:
@@ -71,7 +71,7 @@ services:
     environment:
     - MYSQL_ROOT_PASSWORD=1234
     ports:
-      - 3306:3306
+      - 3316:3306
     logging:
       driver: syslog
       options:
@@ -82,7 +82,7 @@ services:
     environment:
     - MYSQL_ROOT_PASSWORD=1234
     ports:
-      - 3308:3306
+      - 3317:3306
     logging:
       driver: syslog
       options:
