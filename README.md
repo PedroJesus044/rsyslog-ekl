@@ -11,19 +11,21 @@ docker compose up -d
   </li>
 
   <li>
-    Se instala la paquetería rsyslog
+    Se instala la paquetería rsyslog y el módulo omhttp. Ejemplo para RHEL 8
     <ul>
 <pre>
-yum install rsyslog
+cd /etc/yum.repos.d/
+wget https://download.opensuse.org/repositories/home:rgerhards/CentOS_8/home:rgerhards.repo
+yum install rsyslog rsyslog-omhttp
 </pre>
     </ul>
   </li>
 
   <li>
-    Copiar los archivos 70-output.conf y 01-json-template.conf a la ruta correspondiente y reiniciar el servicio rsyslog
+    Copiar el archivo elastic.rsyslog.conf a /etc/rsyslog.d/ remplazando el server, puerto y https según nuestro logstash
     <ul>
 <pre>
-cp ./*.conf /etc/rsyslog.d/
+cp ./elastic.rsyslog.conf /etc/rsyslog.d/
 systemctl restart rsyslog
 </pre>
     </ul>
@@ -39,6 +41,7 @@ Ahora solo debemos mandar los logs de nuestros servicios a syslog de manera norm
 <pre>
 services:
   mariadb-log-test:
+    container_name: db01
     image: mariadb:11.2.4
     environment:
       - MARIADB_ROOT_PASSWORD=mariadb
