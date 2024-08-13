@@ -52,7 +52,7 @@ services:
     logging:
       driver: syslog
       options:
-        tag: container-name-this-is-a-tag
+        tag: docker-db01
 </pre>
     </ul> 
   </li>
