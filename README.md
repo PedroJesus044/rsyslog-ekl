@@ -83,7 +83,7 @@ SysLogLevel=err
   <li>
     <h3>Ansible</h3>
     <ul>Copiar el archivo remote.rsyslog.conf a /etc/rsyslog.d/
-    Las variables de entorno de ansible deben quedar de la siguiente manera
+        Las variables de entorno de ansible deben quedar de la siguiente manera
 <pre>
 - ANSIBLE_HOST_KEY_CHECKING=False
 - TZ=America/Mexico_City
@@ -92,6 +92,11 @@ SysLogLevel=err
 - SYSLOG_PORT=514
 - SYSLOG_SERVER=<your_rsyslog_server_host>
 </pre>
+        Finalmente reiniciar el servicio de rsyslog
+<pre>
+systemctl restart rsyslog
+</pre>
+</ul>
     </ul> 
   </li>
 </ul>
