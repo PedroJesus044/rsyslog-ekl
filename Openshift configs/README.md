@@ -28,15 +28,15 @@ oc create clusterrolebinding collect-audit-logs --clusterrole=collect-audit-logs
 
 Paso 4: Crear un secret llamado elasticsearch-password con el siguiente contenido
 <pre>
-kind: Secret
 apiVersion: v1
+kind: Secret
 metadata:
   name: elasticsearch-password
   namespace: openshift-logging
-data:
-  password: SzByckpnaS1GTmNQUFdMajhRekY=
-  username: ZWxhc3RpYw==
 type: Opaque
+stringData:
+  username: elastic
+  password: K0rrJgi-FNcPPWLj8QzF
 </pre>
 
 Paso 5: Ir al operador OpenShift Logging con la opción "Todos los proyectos" marcada e instalar un ClusterLogForwarder y un ClusterLogging con el contenido de los archivos .yaml con el mismo nombre de este directorio
