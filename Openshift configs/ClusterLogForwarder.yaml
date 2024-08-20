@@ -1,0 +1,21 @@
+apiVersion: logging.openshift.io/v1
+kind: ClusterLogForwarder
+metadata:
+  name: instance
+  namespace: openshift-logging
+spec:
+  outputs:
+    - name: remote-elasticsearch
+      type: elasticsearch
+      secret:
+        name: elasticsearch-password
+      url: 'https://elasticsearch-openshift-collector-pibarrap044-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com:443'
+  pipelines:
+    - inputRefs:
+        - application
+        - audit
+        - infrastructure
+      name: enable-default-log-store
+      outputRefs:
+        - remote-elasticsearch
+  serviceAccountName: openshift-collector

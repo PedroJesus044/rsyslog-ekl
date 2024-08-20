@@ -1,0 +1,6 @@
+#Reiniciar la cuenta elastic de elasticsearch
+bin/elasticsearch-reset-password -u elastic
+
+#Generar un account service token específicamente para kibana
+#La documentación dice que se puede usar fleet-server para conectar con otros nodos
+curl -X POST -u elastic:K0rrJgi-FNcPPWLj8QzF "localhost:9200/_security/service/elastic/kibana/credential/token?pretty"
